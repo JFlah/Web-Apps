@@ -1,0 +1,81 @@
+// HW10 Jack Flaherty
+
+1.)
+
+SELECT * 
+FROM countries
+WHERE CountryName =  'Peru'
+LIMIT 0 , 30
+
+2.)
+
+30 total countries
+
+SELECT CountryName, Languages FROM countries WHERE Languages like '%arab%' limit 1000;
+
+3.)
+
+30 total countries
+
+SELECT CountryName, Languages FROM countries WHERE Languages like '%spanish%' limit 1000;
+
+4.)
+
+select sum(RoadwaysKm) as "TotalRoadKm", continent from countries group by continent;
+
+5.)
+
+177209825599.824 more KWh produced than consumed
+
+SELECT (sum(NaturalGasProductionCubicMeters)
+-sum(NaturalGasConsumptionCubicMeters))*2.83*1.022640*39.3/3.6
+as "More Produced than Consumed in KWh"
+from countries;
+
+6.)
+
+In ascending order: Solomon Islands, Monaco, Falkland Islands (Islas Malvinas), Suriname, American Samoa
+
+select CountryName, (Exports-Imports) as "Trade deficit" from countries
+where (Exports-Imports)>0 order by (Exports-Imports) asc limit 5;
+
+7.)
+
+In ascending order: Syria, Bermuda, Colombia
+
+select CountryName, (Exports-Imports) as "Trade deficit" from countries
+where (Exports-Imports)>0 order by (Exports-Imports) asc limit 5,3;
+
+8.)
+
+Monaco with 45.4 median age
+
+SELECT CountryName, MedianAge as "Max Median Age"
+from countries where MedianAge in (select max(MedianAge) from countries);
+
+9.)
+
+India with 1721785994.66602 people
+
+select CountryName, Population*pow(1+PopulationGrowthRate/100,33)
+as "Highest population in 2040 (25 yrs from now)" from countries
+where Population*pow(1+PopulationGrowthRate/100,33)
+in (select max(Population*pow(1+PopulationGrowthRate/100,33)) from countries);
+
+10.)
+
+1328374753000 bbl remained in 2007
+
+select sum(OilProvedReservesBbl) as "Oil remaining in world (2007)" from countries;
+
+11.)
+
+36.2923465976457 from now, reserves will be gone
+
+SELECT (
+(
+SUM( OilProvedReservesBbl ) / ( SUM( OilConsumptionBblPerDay ) *365 )
+) -8
+) AS  "yrs to comsume past 2015"
+FROM countries
+LIMIT 0 , 30

@@ -1,0 +1,45 @@
+body { font-family: Helvetica;
+     	background-color: black }
+title { color: green }
+h1 { font-family: impact;
+    	text-align: center;
+     	color: green }
+#fieldid { font-weight: bold;
+    		font-size: 150%;
+     		color: green }
+legend { font-weight: bold;
+     		font-size: 1.5em;
+     		font-family: impact;
+     		color: green }
+.floatLeft { float: left;
+     		color: green;
+     		background-color: black }
+.floatRight { float: right;
+     		color: green;
+     		background-color: black }
+.picRight { float: right }
+.picLeft { float: left }
+.mycb { font-size: 150% }
+.bold { font-weight: bold;
+     		font-size: 200%;
+     		color: red }
+#sizes { background-color: slategray;
+    		color: white }
+#p { font-size: xx-small;
+    	color: white }
+.button { font-weight: bold;
+     		float: right;
+     		font-size: xx-large;
+     		color: green;
+     		background-color: black }
+.buttonleft { font-weight: bold;
+     		font-size: xx-large;
+     		color: green;
+     		background-color: black }
+table { color: white }
+label { font-weight: bold }
+.news {
+	overflow: auto;
+	height: 300px;	
+	border: 3px groove blue
+ 	}

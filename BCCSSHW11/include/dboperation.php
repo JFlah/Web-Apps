@@ -17,12 +17,13 @@ include ('dbconn.php');
 </head>
 <body>
 
-
+<!--
 <?php
 echo "<pre>";
 print_r( $_POST );
 echo "</pre>\n";
 ?>
+-->
 
 <?php
 // Make sure all got filled out
@@ -57,13 +58,17 @@ if ($rows != 0){
 		<h1><a href='http://cscilab.bc.edu/~oconnonx/BCCSS/index.php?join=Join+BCCSS'>Try Again</a></h1>");
 }
 
+disconnectFromDB($dbc);
+
 //Add person to DB
+$pwsha1 = sha1($pw);
+$dbc = connectToDB('oconnonx');
 $addQuery = "insert into myclub(
 		name,
         email,
         password,
         registration_date,
-        membership_type) values ('$name', '$email', sha1('$pw'), now(), '$memb')";
+        membership_type) values ('$name', '$email', '$pwsha1', now(), '$memb')";
 $addResult = performQuery($dbc, $addQuery);
 
 if ($addResult) {
@@ -73,6 +78,7 @@ if ($addResult) {
 else {
 	echo "<h1>Something went horribly wrong...</h1>";
 }
+disconnectFromDB($dbc);
 
 
 

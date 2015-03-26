@@ -4,8 +4,7 @@ function connectToDB($dbname){
 					die("Connect failed: ". mysqli_connect_error());
 	return $dbc;
 }
-function disconnectFromDB($dbc, $result){
-	mysqli_free_result($result);
+function disconnectFromDB($dbc){
 	mysqli_close($dbc);
 }
 

@@ -1,0 +1,21 @@
+table, th, td {border: 1px solid black;
+					font-weight: bold }
+body { font-family: Helvetica;
+     	background-color: darkgray }
+title { color: green }
+h1 { font-family: impact;
+    	text-align: center;
+     	color: green }
+legend { font-weight: bold;
+     		font-size: 1.5em;
+     		font-family: impact;
+     		color: green }
+table { color: white }
+.button { font-weight: bold;;
+     		font-size: large;
+     		color: green }
+#fieldid { font-weight: bold;
+    		font-size: 150%;
+     		color: green }
+p { font-size: large;
+		color:green }

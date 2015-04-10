@@ -1,6 +1,31 @@
 <?php
 include ('include/dbconn.php');
+
+$cookiename = 'omitcookie';
+
+if (isset($_GET['op'])){
+	$op = $_GET['op'];
+	switch ($op) {
+		case 'Clear Omit':
+			setcookie($cookiename,"",time()-3600);
+			header("Location: index.php");
+			break;
+		default:
+			break;
+	}
+} else if ( isset( $_POST['omitid'] )) {
+		$id = $_POST['omitid'];
+		if (isset($_COOKIE[$cookiename])){
+			$cookie = $_COOKIE[$cookiename];
+			$cookie .= ", $id";
+			setcookie($cookiename, $cookie);
+		} else {
+			setcookie($cookiename, $id);
+		}
+		header("Location: index.php");
+}
 ?>
+
 <!DOCTYPE html>
 
 <!--
@@ -166,7 +191,10 @@ include ('include/dbconn.php');
 <body>
 	<h1>Best of BC</h1>
 
+
 	<?php
+		// print_r( $_COOKIE );
+
 		$op = isset($_GET['op']) ? $_GET['op'] : "";
 		switch($op){
 			case 'Add Attraction':
@@ -187,9 +215,11 @@ include ('include/dbconn.php');
 <?php
 function displayHomePage($string){
 ?>
+
 	<form method='get'>
 	<fieldset id='fieldid'><legend>Options</legend>
 		<input class='button' type='submit' name='op' value='Add Attraction'><br>
+		<input class='button' type='submit' name='op' value='Clear Omit'><br>
 		<input type='text' name='searchtxt' id='searchtxt'>
 		<input class='button' type='submit' name='op' value='Search'>
 	</fieldset>
@@ -199,13 +229,28 @@ function displayHomePage($string){
 <?php
 	$dbc = connectToDB('csci2254');
 	if ($string==""){
-		$tableQuery = "SELECT * from bestofbc";
+		if (isset($_COOKIE['omitcookie'])){
+			$thecookie = $_COOKIE['omitcookie'];
+			$tableQuery = "SELECT * from bestofbc where attraction_id not in ($thecookie)";
+		}
+		else {
+			$tableQuery = "SELECT * from bestofbc";
+		}
 	} else { 
-		$tableQuery = "select * from bestofbc where name like '%$string%'
+		if (isset($_COOKIE['omitcookie'])){
+			$thecookie = $_COOKIE['omitcookie'];
+			$tableQuery = "select * from bestofbc where attraction_id not in ($thecookie) and name like '%$string%'
 						or entered_by like '%$string%' or
 						category like '%$string%' or address like '%$string%'
 						or phone like '%$string%' or url like '%$string%'
 						or comment like '%$string%' or phone like '%$string%'";
+		} else {
+			$tableQuery = "select * from bestofbc where name like '%$string%'
+						or entered_by like '%$string%' or
+						category like '%$string%' or address like '%$string%'
+						or phone like '%$string%' or url like '%$string%'
+						or comment like '%$string%' or phone like '%$string%'";
+		}
 		echo "<p>Your search results:</p><br>";
 	}
 	$result = performQuery($dbc, $tableQuery);
@@ -224,7 +269,11 @@ function displayHomePage($string){
 
 	while (@extract(mysqli_fetch_array($result, MYSQLI_ASSOC))){
 		echo "<tr><td>$name $stars $price_range <br> $category <br> $url
-					<br> $address $phone</td>";
+					<br> $address $phone <br> 
+		<form method='post'>
+		<input class='button' type='submit' name='omit' value='Omit Attraction'>
+		<input type='hidden' name='omitid' value='$attraction_id'>
+		</form> </td>";
 		echo "<td>$comment</td></tr>";
 	}
 	disconnectFromDB($dbc);

@@ -15,13 +15,6 @@ include ('dbconn.php');
      <title>Best of BC</title>
      <link rel="stylesheet" type="text/css" href="../CSS/BoBC.css">
 </head>
-
-<?php
-echo "<pre>";
-print_r( $_POST );
-echo "</pre>\n";
-?>
-
 <body>
 
 <?php
@@ -38,10 +31,7 @@ echo "</pre>\n";
    				<a href='http://cscilab.bc.edu/~oconnonx/BestOfBC/index.php'>Home Page</a>");
 
    	$loc = getLocation($xml);
-   	echo "<pre>"; print_r($loc);  	echo "</pre>";
-?>
-
-<?php
+   	// echo "<pre>"; print_r($loc);  	echo "</pre>";
 	
 	$name = $_POST['name'];
 	$stars = $_POST['stars'];
@@ -75,8 +65,8 @@ echo "</pre>\n";
 
 	$result = performQuery($dbc, $addQuery);
 
-	echo "Attraction inserted<br>Head back to the
-   				<a href='http://cscilab.bc.edu/~oconnonx/BestOfBC/index.php'>Home Page</a>";
+	echo "<h1>Attraction inserted<br>Head back to the
+   				<a href='http://cscilab.bc.edu/~oconnonx/BestOfBC/index.php'>Home Page</a></h1>";
 	?>
 
 
